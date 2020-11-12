@@ -6,8 +6,8 @@ from dash.dependencies import Input, Output, State
 import pandas as pd
 import datetime as dt
 
-# in milliseconds
-UPDATE_INTERVAL = 1000
+# the interval in milliseconds to update graphs
+UPDATE_INTERVAL = 100
 
 
 tab_collect = dcc.Tab(label='Collect Data', children=[
@@ -26,6 +26,7 @@ tab_collect = dcc.Tab(label='Collect Data', children=[
                     html.Button('Start Collect', id = 'start_button', className='collect_buttons'),
                     html.Button('End Collect', id = 'end_button', className='collect_buttons'),
                     html.Button('Save Data', id = 'save_button', className='collect_buttons'),
+                    html.P(id = 'test_p')
                 ]
             ),
             html.Div(
@@ -65,6 +66,28 @@ tab_collect = dcc.Tab(label='Collect Data', children=[
                         className = 'sensor-data-container',
                         children = [
                             html.Div(
+                                [html.H5("Flex Sensor 3", className="sensor-data-title")]
+                            ),
+                            dcc.Graph(
+                                className = 'sensor-data-graph',
+                                id="sensor-flex-3",
+                            )
+                    ]),
+                    html.Div(
+                        className = 'sensor-data-container',
+                        children = [
+                            html.Div(
+                                [html.H5("Flex Sensor 4", className="sensor-data-title")]
+                            ),
+                            dcc.Graph(
+                                className = 'sensor-data-graph',
+                                id="sensor-flex-4",
+                            )
+                    ]),
+                    html.Div(
+                        className = 'sensor-data-container',
+                        children = [
+                            html.Div(
                                 [html.H5("Pressure Sensor 1", className="sensor-data-title")]
                             ),
                             dcc.Graph(
@@ -72,18 +95,7 @@ tab_collect = dcc.Tab(label='Collect Data', children=[
                                 id="sensor-pressure-1",
                             )
                     ]),
-                    html.Div(
-                        className = 'sensor-data-container',
-                        children = [
-                            html.Div(
-                                [html.H5("Pressure Sensor 2", className="sensor-data-title")]
-                            ),
-                            dcc.Graph(
-                                className = 'sensor-data-graph',
-                                id="sensor-pressure-2",
-                            )
-                    ]),
-                    
+
                 ]
             )
         ]

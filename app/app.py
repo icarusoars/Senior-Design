@@ -39,14 +39,17 @@ app.layout = html.Div(children=[
 # CONNECT TO BLUETOOTH
 # """
 # from src.api_sensor_data.api_bluetooth import connect_bluetooth
-# socket = connect_bluetooth()
+# bd_addr = "98:D3:11:FC:4F:48"
+# port = 1
 
 
 """
 CALLBACKS
 """
 from src.callbacks.collect_data import register_collect_data_callback
-register_collect_data_callback(app)
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+
+    register_collect_data_callback(app)
+
+    app.run_server(debug=True, use_reloader = True)

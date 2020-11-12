@@ -3,9 +3,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
+import time
+import json
+
 import datetime as dt
 
-from ..api_sensor_data.api import get_wind_data
+from ..api_sensor_data.api import get_wind_data, get_sensor_data
+
 
 def register_collect_data_callback(app):
 
@@ -75,22 +79,68 @@ def register_collect_data_callback(app):
     #     return output, output, output, output
 
 
-    from ..api_sensor_data.api_bluetooth import connect_bluetooth, get_sensor_data
-    socket = connect_bluetooth()
+    # @app.callback(
+    #     Output("test_p", "children"),
+    #     [
+    #         Input("sensor-update-interval", "n_intervals"),
+    #     ]
+    # )
+    # def test_interval(interval):
+    #     start_time = time.time()
+    #     sensor_data = get_sensor_data(socket)
+    #     print(interval)
+    #     print(time.time() - start_time)
+    #     return json.dumps(sensor_data)
+
+    
 
     @app.callback(
-        Output("sensor-flex-1", "figure"),
+        [
+            Output("sensor-flex-1", "figure"),
+            Output("sensor-flex-2", "figure"),
+            Output("sensor-flex-3", "figure"),
+            Output("sensor-flex-4", "figure"),
+            Output("sensor-pressure-1", "figure")
+        ],
         [
             Input("sensor-update-interval", "n_intervals"),
         ]
     )
-    def update_interval(start_n_clicks, end_n_clicks, disabled):
-
-        df = get_sensor_data(socket)
-
-        trace = dict(
+    def update_interval(interval):
+        
+        df = get_sensor_data()
+        
+        trace1 = dict(
             type="scatter",
             y = df["flex1"],
+            line={"color": "#42C4F7"},
+            hoverinfo="skip",
+            mode="lines",
+        )
+        trace2 = dict(
+            type="scatter",
+            y = df["flex2"],
+            line={"color": "#42C4F7"},
+            hoverinfo="skip",
+            mode="lines",
+        )
+        trace3 = dict(
+            type="scatter",
+            y = df["flex3"],
+            line={"color": "#42C4F7"},
+            hoverinfo="skip",
+            mode="lines",
+        )
+        trace4 = dict(
+            type="scatter",
+            y = df["flex4"],
+            line={"color": "#42C4F7"},
+            hoverinfo="skip",
+            mode="lines",
+        )
+        trace5 = dict(
+            type="scatter",
+            y = df["pres1"],
             line={"color": "#42C4F7"},
             hoverinfo="skip",
             mode="lines",
@@ -109,8 +159,7 @@ def register_collect_data_callback(app):
             },
             yaxis={
                 "range": [
-                    min(0, min(df["flex1"])),
-                    max(45, max(df["flex1"])),
+                    0,5,
                 ],
                 "showgrid": True,
                 "showline": True,
@@ -121,6 +170,10 @@ def register_collect_data_callback(app):
             margin=dict(l=20, r=20, t=20, b=20),
         )
 
-        output = dict(data=[trace], layout=layout)
+        output1 = dict(data=[trace1], layout=layout)
+        output2 = dict(data=[trace2], layout=layout)
+        output3 = dict(data=[trace3], layout=layout)
+        output4 = dict(data=[trace4], layout=layout)
+        output5 = dict(data=[trace5], layout=layout)
         
-        return output
+        return output1, output2, output3, output4, output5
