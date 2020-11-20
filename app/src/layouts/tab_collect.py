@@ -25,7 +25,7 @@ tab_collect = dcc.Tab(label='Collect Data', children=[
                     # html.Button('Connect Bluetooth', id = 'connect_button', className='collect_buttons'),
                     html.Button('Start Collect', id = 'start_button', className='collect_buttons'),
                     html.Button('End Collect', id = 'end_button', className='collect_buttons'),
-                    html.Button('Save Data', id = 'save_button', className='collect_buttons'),
+                    html.Button('Save & Analyze', id = 'save_button', className='collect_buttons'),
                     html.P(id = 'test_p')
                 ]
             ),

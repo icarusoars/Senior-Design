@@ -8,7 +8,7 @@ import pandas as pd
 
 DB_FILE = pathlib.Path(__file__).resolve().parent.joinpath("wind-data.db").resolve()
 
-DB_SENSOR_FILE = pathlib.Path(__file__).resolve().parent.joinpath("sensor_data.db").resolve()
+DB_SENSOR_FILE = pathlib.Path(__file__).resolve().parent.joinpath("../data_store/bluetooth_data.db").resolve()
 
 
 def get_wind_data(start, end):

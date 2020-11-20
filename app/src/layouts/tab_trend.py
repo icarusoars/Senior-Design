@@ -4,14 +4,38 @@ import dash_html_components as html
 
 
 tab_trend = dcc.Tab(label='Ankle Stress Trend', children=[
-    dcc.Graph(
-        figure={
-            'data': [
-                {'x': [1, 2, 3], 'y': [8, 9, 2],
-                    'type': 'bar', 'name': 'SF'},
-                {'x': [1, 2, 3], 'y': [2, 4, 5],
-                'type': 'bar', 'name': u'Montréal'},
-            ]
-        }
+    
+    html.Div(
+        className = "trend-container",
+        children = [
+            html.Div(
+                className = "trend-top-container",
+                children = [
+                    html.Div(
+                        className = "trend-top-left",
+                        children = [
+                            dcc.Graph(
+                                id = "histogram-avg-stress"
+                            )
+                        ]
+                    ),
+                    html.Div(
+                        className = "trend-top-right",
+                        children = [
+                            dcc.Graph(
+                                id = "histogram-ankle-variance"
+                            )
+                        ]
+                    )
+                ]
+            ),
+            html.Div(
+                className = "trend-bottom-container",
+                children = [
+                    dcc.Graph()
+                ]
+            ),
+        ]
     )
+    
 ])

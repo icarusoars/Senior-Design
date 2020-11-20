@@ -9,6 +9,9 @@ import sqlite3
 bd_addr = "98:D3:11:FC:4F:48"
 port = 1
 
+# SQLite database
+DB_ADDR = "../data_store/bluetooth_data.db"
+
 # object for recording sensor data
 sensor_data = {
     'timestamp' : [],
@@ -25,9 +28,9 @@ def connect_db():
         Create a temporary database table to store sensor readings
         User interface will read from this tempoary database sensor values
     """
-    con = sqlite3.connect('./sensor_data.db')
+    con = sqlite3.connect(DB_ADDR)
     cur = con.cursor()
-    # con.execute("DROP TABLE IF EXISTS sensor_data;")
+    cur.execute("DROP TABLE IF EXISTS sensor_data;")
     cur.execute("""
                     CREATE TABLE IF NOT EXISTS sensor_data (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,14 +103,6 @@ def get_sensor_data(sock, db_connection):
     process_buffer(db_connection)
 
 
-
-    # return correct subselection of data to Dash UI
-    # df = pd.DataFrame(sensor_data)
-    # if df.shape[0] > 0:
-    #     df = df[(df.timestamp < max(df.timestamp)) &
-    #             (df.timestamp > max(df.timestamp) - 20000)]
-    
-    # return df
 
 
 if __name__ == "__main__":
